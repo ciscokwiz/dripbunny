@@ -1,0 +1,1 @@
+export function Wordmark({ small = false }: { small?: boolean }) { return <span className={`wordmark ${small ? 'small' : ''}`} aria-label="Drip Bunny">DRIP<span>BUNNY<span className="logo-drip" /></span><span className="logo-star" aria-hidden="true">✷</span></span>; }
