@@ -4,7 +4,7 @@ import { useFrame } from '@react-three/fiber';
 import { SphereGeometry, type Group } from 'three';
 import { useBunnyMaterial } from './BunnyMaterial';
 import type { PaintPalette } from '@/types/product';
-interface Props { paints: PaintPalette; base: string; coverage: number; seed: number; reduced: boolean; swirl?: number; stationary?: boolean; presentation?: boolean }
+interface Props { paints: PaintPalette; base: string; coverage: number; seed: number; reduced: boolean; swirl?: number; stationary?: boolean; presentation?: boolean | number }
 const parts: { position: [number, number, number]; scale: [number, number, number]; rotation?: [number, number, number] }[] = [
   { position: [-.44, 2.29, 0], scale: [.28, .83, .29], rotation: [0, 0, .17] },
   { position: [.44, 2.29, 0], scale: [.28, .83, .29], rotation: [0, 0, -.17] },
@@ -24,15 +24,24 @@ export function BunnyModel(props: Props) {
   useFrame(({ clock, pointer }, delta) => {
     if (!group.current) return;
     if (props.stationary) {
-      const target = props.presentation ? .35 : -.16;
+      const pose = typeof props.presentation === 'number' ? props.presentation : props.presentation ? 1 : 0;
+      const target = -.16 + pose * .51;
       group.current.rotation.y += (target - group.current.rotation.y) * (props.reduced ? 1 : 1 - Math.exp(-delta * 3));
       group.current.position.y = 0; group.current.rotation.z = 0;
+      group.current.updateWorldMatrix(true, false);
+      material.userData.patternTransform.copy(group.current.matrixWorld).invert();
       return;
     }
-    if (props.reduced) return;
+    if (props.reduced) {
+      group.current.updateWorldMatrix(true, false);
+      material.userData.patternTransform.copy(group.current.matrixWorld).invert();
+      return;
+    }
     group.current.position.y = Math.sin(clock.elapsedTime * .85) * .065;
     group.current.rotation.y += (pointer.x * .14 - group.current.rotation.y) * Math.min(delta * 2, 1);
     group.current.rotation.z = Math.sin(clock.elapsedTime * .5) * .018;
+    group.current.updateWorldMatrix(true, false);
+    material.userData.patternTransform.copy(group.current.matrixWorld).invert();
   });
   return <group ref={group} rotation={[0, -.16, 0]}>
     {parts.map((part, index) => <mesh key={index} position={part.position} scale={part.scale} rotation={part.rotation} castShadow receiveShadow geometry={geometry} material={material} dispose={null}>

@@ -74,7 +74,7 @@ test('WebGL renders a visible bunny and pouring changes its pixels', async ({ pa
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/');
   const hero = page.locator('.hero-bunny canvas');
-  await expect(hero).toBeVisible();
+  await expect(hero).toBeVisible({ timeout: 30000 });
   await expect(page.locator('.hero-bunny .scene-placeholder')).toHaveCount(0, { timeout: 30000 });
   const original = await page.screenshot({ clip: (await hero.boundingBox())! });
   expect(original.length).toBeGreaterThan(8000);
@@ -82,7 +82,7 @@ test('WebGL renders a visible bunny and pouring changes its pixels', async ({ pa
   await expect.poll(async () => (await page.screenshot({ clip: (await hero.boundingBox())! })).equals(original), { timeout: 20000 }).toBe(false);
   await page.locator('#marble-lab').scrollIntoViewIfNeeded();
   const lab = page.locator('.lab-stage canvas');
-  await expect(lab).toBeVisible();
+  await expect(lab).toBeVisible({ timeout: 30000 });
   await expect(page.locator('.lab-stage .scene-placeholder')).toHaveCount(0, { timeout: 30000 });
   const blank = await page.screenshot({ clip: (await lab.boundingBox())! });
   await page.getByLabel('Paint colour 1').fill('#008a49');

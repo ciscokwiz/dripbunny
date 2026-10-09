@@ -21,3 +21,9 @@ The browser uses software-rendered WebGL. These checks do not establish physical
 - Strict TypeScript, ESLint and production build passed. The /mix-your-own route is generated and included in the sitemap when the canonical origin is configured.
 - Fresh custom-page mobile render: document width 375px; footer ends at the document bottom, with no horizontal overflow.
 - Actual product photos remain unavailable. Both collection sections and quick view are wired to the shared catalogue-backed ProductVisual component; the clearly disclosed sample illustrations have not been represented as real photos.
+
+## Smooth story transitions
+
+Story animation now uses continuous scroll progress with a hold at each step, rather than switching between three fixed animation targets. The material uses bunny-local coordinates so the finished marble pattern stays attached during the display turn. Stage headings have room above the model and are no longer clipped by the panel corners.
+
+Validation covers forward/backward navigation at 375px and 1440px, intermediate progress with normal and reduced motion, and the actual WebGL paint render. Browser checks wait for rendered frames because software WebGL can delay animation frames; fixed millisecond delays are not reliable here. Physical mobile GPU performance remains untested.

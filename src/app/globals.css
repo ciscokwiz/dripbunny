@@ -17,3 +17,6 @@
 @media(max-width:600px){.custom-collection-card{padding:23px;gap:18px}.custom-collection-card h3{font-size:27px}.custom-collection-card .eyebrow{font-size:8px}.custom-collection-card .button{width:100%}.story-stage-label>strong{font-size:18px}.story-stage-label{font-size:8px;left:18px;top:18px}.story-pour-cup{left:20%;top:55px}.how-step{opacity:.65}.how-step.current{opacity:1}.how-visual>p{font-size:9px}.story-controls>button{font-size:8px}.colourway .real-product-image{height:160px}.buy-custom>strong{font-size:22px}}
 @media(min-width:601px){.lab-layout{overflow:clip}.lab-stage{height:auto;align-self:stretch}.lab-stage .bunny-scene{position:sticky;top:105px}.lab-stage .lab-caption{z-index:2;background:#eeded7b0;border-radius:20px;left:15px;right:15px;padding:7px}.lab-controls{padding-bottom:35px}}
 @media(max-width:600px){.how-visual{position:sticky;top:87px;z-index:3;box-shadow:0 8px 15px #fffaf1}.how-layout{position:relative}.how-step{scroll-margin-top:490px}}
+
+/* Keep stage headings visible and separate from the bunny at every viewport. */
+.how-visual{border-radius:32px}.how-visual .bunny-scene{padding-top:45px}

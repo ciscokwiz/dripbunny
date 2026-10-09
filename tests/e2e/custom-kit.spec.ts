@@ -66,3 +66,30 @@ for (const width of [375, 1440]) {
     expect(sequence).toContain(2);
   });
 }
+
+for (const reducedMotion of ['reduce', 'no-preference'] as const) {
+test(`story paint and pose blend continuously between step centres with ${reducedMotion} motion`, async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.emulateMedia({ reducedMotion });
+  await page.goto('/');
+  await page.evaluate(() => document.fonts.ready);
+  await page.locator('#how-it-works').scrollIntoViewIfNeeded();
+  await expect(page.locator('.how-visual .scene-placeholder')).toHaveCount(0, { timeout: 30000 });
+  const positions = await page.locator('.how-step').evaluateAll(nodes =>
+    nodes.map(node => { const rect = node.getBoundingClientRect(); return window.scrollY + rect.top + rect.height / 2 - window.innerHeight * .52; }));
+  const values: number[] = [];
+  for (let i = 0; i <= 12; i++) {
+    await page.evaluate(y => window.scrollTo({ top: y, behavior: 'instant' }), positions[0] + (positions[2] - positions[0]) * i / 12);
+    // Software WebGL can delay frames; wait for scroll and React's next paint.
+    await page.evaluate(() => new Promise<void>(resolve =>
+      requestAnimationFrame(() => requestAnimationFrame(() => requestAnimationFrame(() => resolve())))));
+    values.push(Number(await page.locator('.how-visual').getAttribute('data-story-progress')));
+  }
+  expect(values[0]).toBeCloseTo(0, 1);
+  expect(values.at(-1)).toBeCloseTo(2, 1);
+  expect(values).toEqual([...values].sort((a, b) => a - b));
+  expect(values.some(value => value > .1 && value < .9)).toBe(true);
+  expect(values.some(value => value > 1.1 && value < 1.9)).toBe(true);
+  expect(Math.max(...values.slice(1).map((value, i) => value - values[i]))).toBeLessThan(.5);
+});
+}
