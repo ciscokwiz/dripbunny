@@ -27,3 +27,9 @@ The browser uses software-rendered WebGL. These checks do not establish physical
 Story animation now uses continuous scroll progress with a hold at each step, rather than switching between three fixed animation targets. The material uses bunny-local coordinates so the finished marble pattern stays attached during the display turn. Stage headings have room above the model and are no longer clipped by the panel corners.
 
 Validation covers forward/backward navigation at 375px and 1440px, intermediate progress with normal and reduced motion, and the actual WebGL paint render. Browser checks wait for rendered frames because software WebGL can delay animation frames; fixed millisecond delays are not reliable here. Physical mobile GPU performance remains untested.
+
+## Cup illustrations for Pour and Swirl
+
+Pour now shows pink, blue and green Drip Bunny bottles pouring into a transparent cup. Swirl shows the same colours marbled inside a transparent cup with a wooden mixing stick. These are local vector illustrations based on the supplied bottle reference; Show retains the finished blue 3D bunny. The three views crossfade with the existing scroll progress and respect reduced motion.
+
+Production story checks verify the correct accessible artwork and full opacity at each step, forward/backward mobile and desktop navigation, and continuous progression with normal and reduced motion. Captured 375px visuals were inspected for clear cups, visible labels and the preserved finished bunny.

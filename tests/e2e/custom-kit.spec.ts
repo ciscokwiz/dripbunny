@@ -53,6 +53,11 @@ for (const width of [375, 1440]) {
       await expect(page.locator('.how-step.current')).toHaveCount(1);
       await expect(page.locator(`[data-step="${i}"]`)).toHaveAttribute('aria-current', 'step');
       await expect(page.locator('.story-stage-label')).toContainText(`STEP 0${i + 1}`);
+      const artwork = page.locator(`[data-story-art="${['pour', 'swirl', 'show'][i]}"]`);
+      await expect(artwork).toHaveAttribute('aria-hidden', 'false');
+      await expect(artwork).toHaveCSS('opacity', '1');
+      if (i < 2) await expect(artwork.getByRole('img')).toHaveAttribute('aria-label', i === 0 ? /bottles pouring into a transparent/ : /swirled together using a wooden mixing stick/);
+      await page.locator('.how-visual').screenshot({ path: `test-results/story-${width}-${i}.png` });
     }
     const sequence: number[] = [];
     for (let n = 0; n < 10; n++) {

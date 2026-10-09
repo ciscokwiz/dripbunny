@@ -20,3 +20,7 @@
 
 /* Keep stage headings visible and separate from the bunny at every viewport. */
 .how-visual{border-radius:32px}.how-visual .bunny-scene{padding-top:45px}
+
+.story-artwork{position:relative;height:440px}.story-art-layer{position:absolute;inset:0;pointer-events:none;transition:opacity .25s;will-change:opacity}.paint-cup-art{display:block;width:100%;height:100%;padding:42px 12px 0}.story-bunny-layer .bunny-scene{height:100%}
+@media(max-width:900px){.story-artwork{height:350px}}
+@media(max-width:600px){.story-artwork{height:340px}.paint-cup-art{padding:35px 0 0}}
