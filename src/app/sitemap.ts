@@ -1,3 +1,3 @@
 import type { MetadataRoute } from 'next';
 import { brand } from '@/config/brand';
-export default function sitemap(): MetadataRoute.Sitemap { return brand.siteUrl ? [{ url: brand.siteUrl, changeFrequency: 'monthly', priority: 1 }] : []; }
+export default function sitemap(): MetadataRoute.Sitemap { return brand.siteUrl ? [{ url: brand.siteUrl, changeFrequency: 'monthly', priority: 1 }, { url: `${brand.siteUrl}/mix-your-own`, changeFrequency: 'monthly', priority: .8 }] : []; }

@@ -41,3 +41,30 @@ describe('bag and catalogue', () => {
     if (result.status === 'unavailable') expect(result.message).toContain('no order has been placed');
   });
 });
+
+describe('custom paint specifications', () => {
+  const configuration = { base: '#fff4e7', paints: ['#ff0099', '#0088ff', '#ffeebb'] as const, seed: 3.7, blanks: 2, notes: 'Pastel finish, please.' };
+  beforeEach(() => useStore.setState({ items: [] }));
+  it('keeps different paint specifications as separate bag items', () => {
+    useStore.getState().addCustom(configuration);
+    useStore.getState().addCustom({ ...configuration, paints: ['#abcdef', '#0088ff', '#ffeebb'] });
+    useStore.getState().addCustom(configuration);
+    const items = useStore.getState().items;
+    expect(items).toHaveLength(2);
+    expect(items[0].quantity).toBe(2);
+    expect(items[0].configuration).toEqual(configuration);
+    expect(cartTotal(items)).toBeNull();
+  });
+  it('preserves a saved configuration even if the caller changes its palette later', () => {
+    const paints: [string, string, string] = ['#ff0099', '#0088ff', '#ffeebb'];
+    useStore.getState().addCustom({ ...configuration, paints });
+    paints[0] = '#000000';
+    expect(useStore.getState().items[0].configuration?.paints[0]).toBe('#ff0099');
+  });
+  it('rejects malformed paint, blank counts and non-finite pattern values', () => {
+    useStore.getState().addCustom({ ...configuration, paints: ['red', '#0088ff', '#ffeebb'] });
+    useStore.getState().addCustom({ ...configuration, blanks: 0 });
+    useStore.getState().addCustom({ ...configuration, seed: NaN });
+    expect(useStore.getState().items).toEqual([]);
+  });
+});

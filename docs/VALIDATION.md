@@ -13,3 +13,11 @@ Validated in the current cloud machine with Node 24.19.0, npm 11.9.0 and install
 - `npm audit --omit=dev --audit-level=high`: 0 vulnerabilities reported at validation time.
 
 The browser uses software-rendered WebGL. These checks do not establish physical iOS/Android GPU performance or replace screen-reader/device testing. Payment processing, real orders, shipping and actual packaging photography were not validated because those integrations/assets/business details were not supplied. See LAUNCH.md for requirements. Saved cloud install/start instructions are configuration drafts; publication and fresh-task restoration are separate product actions and have not been claimed as tested.
+
+## Custom kit and storytelling revision
+
+- 12 unit tests passed, including distinct custom configurations, palette-copy isolation, rejected malformed specifications, legacy/custom persistence, and configured per-blank/paint-set subtotal calculations.
+- 11 production browser tests passed. New checks cover the dedicated /mix-your-own route, configured blank counts/colours/base/notes in the bag, persistence after reload, direct Lab-to-cart additions, and ordered forward/backward story navigation plus continuous monotonic scrolling on mobile and desktop.
+- Strict TypeScript, ESLint and production build passed. The /mix-your-own route is generated and included in the sitemap when the canonical origin is configured.
+- Fresh custom-page mobile render: document width 375px; footer ends at the document bottom, with no horizontal overflow.
+- Actual product photos remain unavailable. Both collection sections and quick view are wired to the shared catalogue-backed ProductVisual component; the clearly disclosed sample illustrations have not been represented as real photos.

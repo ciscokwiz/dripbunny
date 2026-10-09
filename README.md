@@ -69,3 +69,15 @@ See `public/images/README.md`, `public/models/README.md` and `docs/DESIGN.md`. N
 Deploy on a Node-compatible Next.js host or Vercel. Use `npm ci`, then `npm run build`; on a Node server run `npm run start`. Copy `.env.example` to the host's secure environment settings, set the real `NEXT_PUBLIC_SITE_URL` to an HTTPS origin, then rebuild. Sitemap and canonical metadata only populate after a real origin is configured. Fonts and procedural 3D have no external runtime fetch dependency.
 
 The storefront can be deployed for exploration now. A commerce launch still needs real packaging/product photography, confirmed product/business details, permitted customer assets where desired, payment backend, policy pages, and provider testing. There are no real customer testimonials or fabricated prices in this implementation.
+
+## Custom blank and paint service
+
+`/mix-your-own` is the dedicated custom kit builder. Both this page and the homepage Marble Lab let customers select a base/blank-finish request, three paint colours, 1–10 blank bunnies per custom kit, and up to 500 characters of specifications. Pour or remix a preview, then use **Add this colour combination to bag**. The bag stores the exact hex colour requests, blank count, notes and procedural pattern seed. Matching configurations combine quantities; different configurations remain separate. A physical pour is not guaranteed to match the digital pattern or screen colour exactly.
+
+Existing curated bags remain compatible. Persisted custom records are validated before restoration, and their IDs are rebuilt from the canonical specification. The checkout boundary receives the full configuration on each custom cart line; the eventual server must validate it and reprice it authoritatively.
+
+`customKitPricing` in `src/config/products.ts` has configurable per-blank and per-three-paint-set prices in minor units. Both are `null` pending confirmation. The subtotal remains unknown until every item has configured prices. Confirm paint amounts, finish availability and any specification-dependent quote process before launching payments. The custom service does not promise the curated kits' mixing cups/gloves.
+
+Both **Find Your Colour** and **Shop the Collection**, plus quick view, use `ProductVisual.tsx` and the same product image paths. Supply real local photos and set the four catalogue `image` values; samples remain clearly labelled until those files are available.
+
+Storytelling uses one scroll-position calculation across all three steps, a fixed pattern seed, eased paint coverage/swirl uniforms, explicit stage labels and a stationary camera. The Pour stage has a visible cup/stream, Swirl reveals the marbling, and Show uses a finished display pose/background. Mobile keeps the preview visible while the panels scroll.

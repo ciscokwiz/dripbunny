@@ -1,12 +1,18 @@
-import { productById } from '@/config/products';
+import { customKitPricing, productById } from '@/config/products';
 import type { CartItem } from '@/types/product';
+export function cartItemUnitPrice(item: CartItem): number | null {
+  if (item.configuration) {
+    if (customKitPricing.blankPriceMinor === null || customKitPricing.paintSetPriceMinor === null) return null;
+    return item.configuration.blanks * customKitPricing.blankPriceMinor + customKitPricing.paintSetPriceMinor;
+  }
+  return productById(item.id)?.priceMinor ?? null;
+}
 export function cartTotal(items: readonly CartItem[]): number | null {
-  if (!items.length) return 0;
   let total = 0;
   for (const item of items) {
-    const product = productById(item.id);
-    if (!product || product.priceMinor === null) return null;
-    total += product.priceMinor * item.quantity;
+    const price = cartItemUnitPrice(item);
+    if (price === null) return null;
+    total += price * item.quantity;
   }
   return total;
 }

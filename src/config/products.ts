@@ -10,3 +10,5 @@ export const products: readonly Product[] = [
 export const kitContents = ['1 Bunny Figure', '3 Premium Pour Paints', '2 Mixing Cups', '1 Pair of Gloves'] as const;
 export function productById(id: string) { return products.find(product => product.id === id); }
 export function formatMoney(minor: number) { return new Intl.NumberFormat(commerce.locale, { style: 'currency', currency: commerce.currency }).format(minor / 100); }
+// Custom service pricing stays unconfirmed until supplied by the business.
+export const customKitPricing: { blankPriceMinor: number | null; paintSetPriceMinor: number | null } = { blankPriceMinor: null, paintSetPriceMinor: null };

@@ -8,3 +8,7 @@
 - Configure a canonical HTTPS origin, rebuild and inspect sitemap/metadata.
 - Review on physical iOS/Android devices, keyboard and screen reader, and perform host-specific performance testing. Chromium software-rendered testing cannot establish every device's GPU performance.
 - Customer gallery content is optional; keep current items clearly labelled studio samples unless permitted customer photos are supplied.
+
+## Custom kit service
+
+Confirm per-blank and three-paint-set prices, paint amounts, which blank finishes can be supplied, screen/physical colour matching and any specification-dependent quoting rules. Pass the saved custom configuration to the checkout server and validate/reprice it there. Real product photos are still required for the Find Your Colour and Shop the Collection sections; both share catalogue image paths.

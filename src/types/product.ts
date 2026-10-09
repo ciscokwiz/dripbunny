@@ -13,4 +13,11 @@ export interface Product {
   priceMinor: number | null;
   image: string | null;
 }
-export interface CartItem { id: VariantId; quantity: number }
+export interface CartItem { id: string; quantity: number; configuration?: CustomConfiguration }
+export interface CustomConfiguration {
+  base: string;
+  paints: PaintPalette;
+  seed: number;
+  blanks: number;
+  notes: string;
+}

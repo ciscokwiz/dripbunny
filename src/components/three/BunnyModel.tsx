@@ -4,7 +4,7 @@ import { useFrame } from '@react-three/fiber';
 import { SphereGeometry, type Group } from 'three';
 import { useBunnyMaterial } from './BunnyMaterial';
 import type { PaintPalette } from '@/types/product';
-interface Props { paints: PaintPalette; base: string; coverage: number; seed: number; reduced: boolean }
+interface Props { paints: PaintPalette; base: string; coverage: number; seed: number; reduced: boolean; swirl?: number; stationary?: boolean; presentation?: boolean }
 const parts: { position: [number, number, number]; scale: [number, number, number]; rotation?: [number, number, number] }[] = [
   { position: [-.44, 2.29, 0], scale: [.28, .83, .29], rotation: [0, 0, .17] },
   { position: [.44, 2.29, 0], scale: [.28, .83, .29], rotation: [0, 0, -.17] },
@@ -22,7 +22,14 @@ export function BunnyModel(props: Props) {
   useEffect(() => () => geometry.dispose(), [geometry]);
   const group = useRef<Group>(null);
   useFrame(({ clock, pointer }, delta) => {
-    if (!group.current || props.reduced) return;
+    if (!group.current) return;
+    if (props.stationary) {
+      const target = props.presentation ? .35 : -.16;
+      group.current.rotation.y += (target - group.current.rotation.y) * (props.reduced ? 1 : 1 - Math.exp(-delta * 3));
+      group.current.position.y = 0; group.current.rotation.z = 0;
+      return;
+    }
+    if (props.reduced) return;
     group.current.position.y = Math.sin(clock.elapsedTime * .85) * .065;
     group.current.rotation.y += (pointer.x * .14 - group.current.rotation.y) * Math.min(delta * 2, 1);
     group.current.rotation.z = Math.sin(clock.elapsedTime * .5) * .018;
